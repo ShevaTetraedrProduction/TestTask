@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .wrapper {
+            padding-top: 20px;
+            margin: 10% auto;
+        }
+
+        .wrapper .form-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="wrapper">
+                <h2 style="text-align: center">Sign Out</h2>
+                <br>
+                <form th:action="@{/regfinished}" th:method="post">
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" class="form-control" th:value="${user.getId()}"
+                                   name="id" id="id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-sm-offset-2 col-sm-2 ">Ім'я:</label>
+                            <div class="col-sm-6 ">
+                                <input type="text" class="form-control" th:value="${user.getFirst_name()}"
+                                       name="first_name" id="first_name" placeholder="Enter name"
+                                       style="display: inline">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-sm-offset-2 col-sm-2 ">Прізвище :</label>
+                            <div class="col-sm-6 ">
+                                <input type="text" class="form-control" th:value="${user.getLast_name()}"
+                                       name="last_name" placeholder="Enter Last name"
+                                       style="display: inline">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-sm-offset-2 col-sm-2 ">Email :</label>
+                            <div class="col-sm-6 ">
+                                <input type="email" class="form-control" th:value="${user.getEmail()}" name="email"
+                                       placeholder="Example : newuser2000@gmail.com "
+                                       style="display: inline">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-sm-offset-2 col-sm-2 ">Password :</label>
+                            <div class="col-sm-6 ">
+                                <input type="password" class="form-control" th:value="${user.getPwd()}"
+                                       name="pwd" placeholder="********"
+                                       style="display: inline">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-offset-2 col-sm-4">
+                                <a th:href="@{/signOut}" class="btn btn-primary">Canceled</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-success">Sign In</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <p style="color: crimson; text-align: center" th:text="${msg.toString()}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

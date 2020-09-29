@@ -1,0 +1,115 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Головний екран</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!--<link rel="SHORTCUT ICON" type="image/png" href="logo.png" />-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <style>
+        nav {
+            width: 100%;
+        }
+
+        .color_link a {
+            color: antiquewhite;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="row">
+        <nav class="navbar  navbar-light bg-dark">
+            <div class="nav-item active col-sm-1 color_link">
+                <a class="nav-link disable" th:disabled="true" href="#">Головна</a>
+            </div>
+            <div class="col-sm-5 color_link">
+                <a class="nav-link" th:href="@{/personalCab}">Персональний кабінет</a>
+            </div>
+            <div class="col-sm-2 offset-sm-4 color_link">
+                <a class="nav-link" style="color: crimson" th:href="@{/signOut}">Sign out</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+
+
+    <h1 style="text-align: center; padding-top: 5% ">Головний екран</h1>
+
+    <div class="container">
+        <div th:each="advert:${adverts.getContent()}" id="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" th:href="'#collaps' + ${advert.getId()}">
+                        <span th:text="${advert.getUser().getFirst_name() + ' '  + advert.getUser().getLast_name()}"> </span>
+                    </a>
+                    <div class="float-sm-right" th:style="${advert.getUser().getId() != id} ? 'display: none'">
+                        <form th:method="post"
+                              th:action="@{/delete/{id}/page/{page}(id=${advert.getId()}, page=${adverts.pageable.pageNumber + 1})}">
+                            <input type="submit" value="X"/>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="collapse show" data-parent="#accordion" th:id="'collaps' + ${advert.getId()}">
+                    <div class="card-body">
+                        <div class="title">
+                            <h4 style="color: blueviolet" th:text="${advert.getTitle()}"></h4>
+                        </div>
+                        <p th:text="${advert.getText()}"></p>
+                    </div>
+                </div>
+                <div style="padding: 0" class="card-footer text-muted">
+                    <p style="text-align: right; font-size: 12px;" th:text="${advert.getPublishedOn()}"></p>
+                </div>
+            </div>
+            <br>
+
+        </div>
+    </div>
+
+    <a class="page-link active"
+       th:style="${adverts.getTotalElements() > 0} ? 'display: none' "
+       th:href="@{/addTestValue}">
+        Добавити данні</a>
+
+    <div class="row">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination col-sm-5 offset-sm-5" th:if="${adverts.getTotalPages() > 0}">
+                <div th:style="${adverts.pageable.getPageNumber() == 0} ? 'display: none'  ">
+                    <li th:class="'page-item '">
+                        <a th:class="'page-link'"
+                           th:href="@{/main(page= ${adverts.pageable.getPageNumber()})}"
+                           th:disabled="${adverts.pageable.getPageNumber() + 1 == 1}"
+                        >
+                            Previous</a></li>
+                </div>
+
+                <li th:class="'page-item'" th:each="pageNumber : ${numbers}">
+                    <div th:style="${adverts.pageable.getPageNumber() == pageNumber} ? 'border: 4px groove blue' : 'background: black' ">
+                        <a th:class="'page-link'"
+                           th:href="@{/main(page=${pageNumber + 1})}"
+                           th:text="${pageNumber + 1}"
+                           th:disabled="${pageNumber == adverts.pageable.getPageNumber()}">
+                        </a>
+                    </div>
+                </li>
+                <div th:style="${adverts.pageable.getPageNumber() + 1 == adverts.getTotalPages()} ? 'display: none'  ">
+                    <li class="page-item"><a class="page-link active"
+                                             th:href="@{/main(page=${adverts.pageable.pageNumber + 2})}">
+                        Next</a></li>
+                </div>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>

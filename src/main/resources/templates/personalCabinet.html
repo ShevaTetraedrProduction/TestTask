@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .infoblock {
+            text-align: center;
+            padding-top: 20%;
+            margin: auto;
+            width: 50%;
+        }
+
+        nav {
+            width: 100%;
+        }
+
+        .color_link a {
+            color: antiquewhite;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="row">
+        <nav class="navbar  navbar-light bg-dark">
+            <div class="nav-item active col-sm-1 color_link">
+                <a class="nav-link" th:disabled="true" th:href="@{/main}">Головна</a>
+            </div>
+            <div class="col-sm-5 color_link">
+                <a class="nav-link disable" th:href="'#'">Персональний кабінет</a>
+            </div>
+            <div class="col-sm-2 offset-sm-4 color_link">
+                <a class="nav-link" style="color: crimson" th:href="@{/signOut}">Sign out</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="infoblock">
+        <h1>Персональний кабінет</h1>
+        <p th:text="${client.getEmail()}"></p>
+        <a th:href="@{editProfile/{id}(id = ${client.getId()})}" class="btn btn-danger">
+            Змінити параметри<br> повторна авторизація
+        </a>
+        <a th:href="@{/getAddAdvert}" class="btn btn-danger">
+            <br>
+            Добавити Оголошення
+
+        </a>
+    </div>
+</div>
+</body>
+</html>
